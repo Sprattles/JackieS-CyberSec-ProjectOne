@@ -177,7 +177,7 @@ SSH into the control node and follow the steps below:
 
   Metricbeat: 
 
-      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml
+      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml /etc/ansible/roles
     
 - Run the filebeat playbook
 
