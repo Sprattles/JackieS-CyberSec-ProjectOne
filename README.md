@@ -98,41 +98,41 @@ These Beats allow us to collect the following information from each machine:
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the required YAML file to `/etc/ansible/`
-- Update the [hosts](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/hosts) file to include the IPs of the webservers and ELK machine.  This is so that the playbook knows which host to install the required playbook on.  i.e. you install the ELK server on the [elk] host and filebeat/metricbeat on the [webservers].
-- Run the playbook with `ansible-playbook *playbook_file*.yml`, and navigate to http://*yourELKVM.IP*:5601/app/kibana to check that the installation worked as expected. 
+- Copy the required YAML file(s) to `/etc/ansible/`
+- Update the [hosts](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/hosts) file to include the IPs of the webservers and ELK machine.  This is so that the playbook knows which host to install the required playbook on.  i.e. you install the ELK server on the [elk] host and filebeat/metricbeat on the [webservers] host.
+- Run the playbook with `ansible-playbook *playbook_file*.yml`, and navigate to [http://*yourELKVM.IP*:5601/app/kibana] to check that the installation worked as expected. 
 
 ### Commands to install ELK, filebeat and metricbeat
 note: users and IP addresses listed below are for this specific project, so will be different for a new virtual network setup.
 
 #### Install ELK onto ELK-VM
->SSH into jumpbox (from local machine): 
-> `ssh azadmin@20.37.247.61`
->
->list docker containers:
-> `sudo docker container list -a`
->
->start docker container
->`sudo docker container start compassionate_leakey`
->
->attack docker container
->`sudo docker container attach compassionate_leakey`
->
->Add webservers and ELK machines to hosts file
->`nano /etc/ansible/hosts`
->- eg for this project it looked like;
->> [webservers]                                                                              
+SSH into jumpbox (from local machine): 
+`ssh azadmin@20.37.247.61`
+
+list docker containers:
+`sudo docker container list -a`
+
+start docker container
+`sudo docker container start compassionate_leakey`
+
+attack docker container
+`sudo docker container attach compassionate_leakey`
+
+Add webservers and ELK machines to hosts file
+`nano /etc/ansible/hosts`
+- eg for this project it looked like;
+[webservers]                                                                              
 10.1.0.8 ansible_python_interpreter=/usr/bin/python3                                                                                 
 10.1.0.9 ansible_python_interpreter=/usr/bin/python3                                                                                  
 10.1.0.10 ansible_python_interpreter=/usr/bin/python3
 [elk] 
 10.1.0.10 ansible_python_interpreter=/usr/bin/python3
->run install-elk.yml playbook
->`ansible-playbook /etc/ansible/install-elk.yml`
->
->go to http://*yourELKVM.IP*:5601/app/kibana to check the ELK installation worked
+run install-elk.yml playbook
+`ansible-playbook /etc/ansible/install-elk.yml`
+
+go to [http://*yourELKVM.IP*:5601/app/kibana] to check the ELK installation worked
 
 #### Install filebeat & metricbeat onto webservers
 Within your ansible container;
->copy filebeat and metricbeat config files to /etc/ansible/files
->`
+copy filebeat and metricbeat config files to /etc/ansible/files
+`
