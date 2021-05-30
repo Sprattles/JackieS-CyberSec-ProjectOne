@@ -9,12 +9,12 @@ These files have been tested and used to generate a live ELK deployment on Azure
   - [Ansible Playbook files](https://github.com/Sprattles/JackieS-CyberSec-Project1/tree/main/Ansible) 
 
 This document contains the following details:
-- Description of the Topologu
+- Description of the Topology
 - Access Policies
 - ELK Configuration
-  - Beats in Use
-  - Machines Being Monitored
-- How to Use the Ansible Build
+  - Beats in use
+  - Machines being monitored
+- How to use the ansible build
 
 
 ### Description of the Topology
@@ -50,7 +50,6 @@ Only the jump box machine can accept connections from the Internet. Access to th
  - My public IP address on my local machine
 
 Machines within the network can only be accessed by SSH connections on port 22 from the jump box.
-- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
 
 A summary of the access policies in place can be found in the table below.
 
@@ -99,8 +98,41 @@ These Beats allow us to collect the following information from each machine:
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the required YAML file to /etc/ansible/
+- Copy the required YAML file to `/etc/ansible/`
 - Update the [hosts](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/hosts) file to include the IPs of the webservers and ELK machine.  This is so that the playbook knows which host to install the required playbook on.  i.e. you install the ELK server on the [elk] host and filebeat/metricbeat on the [webservers].
-- Run the playbook with ```ansible-playbook [required_playbook_file].yml```, and navigate to http://[your.VM.IP]:5601/app/kibana to check that the installation worked as expected. 
+- Run the playbook with `ansible-playbook *playbook_file*.yml`, and navigate to http://*yourELKVM.IP*:5601/app/kibana to check that the installation worked as expected. 
 
+### Commands to install ELK, filebeat and metricbeat
+note: users and IP addresses listed below are for this specific project, so will be different for a new virtual network setup.
 
+#### Install ELK onto ELK-VM
+>SSH into jumpbox (from local machine): 
+> `ssh azadmin@20.37.247.61`
+>
+>list docker containers:
+> `sudo docker container list -a`
+>
+>start docker container
+>`sudo docker container start compassionate_leakey`
+>
+>attack docker container
+>`sudo docker container attach compassionate_leakey`
+>
+>Add webservers and ELK machines to hosts file
+>`nano /etc/ansible/hosts`
+>- eg for this project it looked like;
+>> [webservers]                                                                              
+10.1.0.8 ansible_python_interpreter=/usr/bin/python3                                                                                 
+10.1.0.9 ansible_python_interpreter=/usr/bin/python3                                                                                  
+10.1.0.10 ansible_python_interpreter=/usr/bin/python3
+[elk] 
+10.1.0.10 ansible_python_interpreter=/usr/bin/python3
+>run install-elk.yml playbook
+>`ansible-playbook /etc/ansible/install-elk.yml`
+>
+>go to http://*yourELKVM.IP*:5601/app/kibana to check the ELK installation worked
+
+#### Install filebeat & metricbeat onto webservers
+Within your ansible container;
+>copy filebeat and metricbeat config files to /etc/ansible/files
+>`
