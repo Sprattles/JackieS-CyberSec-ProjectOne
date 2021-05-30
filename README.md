@@ -144,6 +144,56 @@ note: users and IP addresses listed below are for this specific project, so will
 go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check the ELK installation worked
 
 #### Install filebeat & metricbeat onto webservers
-Within your ansible container;
-copy filebeat and metricbeat config files to /etc/ansible/files
-`
+- Within your ansible container, copy filebeat and metrictbeat config files to /etc/ansible/files
+
+    Filebeat:    `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-config.yml /etc/ansible/files`
+    
+    Metricbeat: `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-config.yml`
+
+- Edit the filebeat and metricbeat files to replace the IP address with that of your ELK machine.  
+Note: filebeat is a large file so the IP addresses need replacing at lines #1106 & #1806
+
+    `nano filebeat-config.yml`
+
+    `nano metricbeat-config.yml`
+    
+    tip: to quickly get to specific lines press `ctrl`+`shift`+`_` and enter the line number you want to navigate to.
+
+    Remember to save your changes.
+  
+
+
+- Download and save the filebeat and metricbeat playbook files to /etc/ansible/roles
+
+Filebeat: `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-playbook.yml /etc/ansible/roles`
+
+Metricbeat: `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml`
+    
+- Run the filebeat playbook
+
+    `ansible-playbook filebeat-playbook.yml`
+- Go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) and do the following steps to verify the filebeat installation was successful;
+
+  - click on `Add log data`
+  - then `System logs`
+  - select `DEB` under the 'Getting Started' heading
+  - scroll down to the bottom and click on the `Check data` button
+  - then you can analyse data by clicking on the blue `System logs dashboard` button
+
+  - Run the metricbeat playbook
+
+    `ansible-playbook metricbeat-playbook.yml`
+- Go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) and do the following steps to verify the filebeat installation was successful;
+
+  - click on `Add metric data`
+  - then `Docker metrics`
+  - select `DEB` under the 'Getting Started' heading
+  - scroll down to the bottom and click on the `Check data` button
+  - then you can analyse data by clicking on the blue `Docker metrics dashboard` button
+    
+    
+
+    
+    
+
+
