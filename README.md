@@ -1,4 +1,4 @@
-## Automated ELK Stack Deployment
+# Automated ELK Stack Deployment
 
 The files in this repository were used to configure the network depicted below.
 
@@ -17,7 +17,7 @@ This document contains the following details:
 - How to use the ansible build
 
 
-### Description of the Topology
+## Description of the Topology
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
@@ -42,7 +42,7 @@ The configuration details of each machine may be found below.
 | ELK-VM  | Elk       | 52.189.227.118 / 10.0.0.4 | Linux (Ubuntu 18.04) |
 
 
-### Access Policies
+## Access Policies
 
 The machines on the internal network are not exposed to the public Internet. 
 
@@ -61,7 +61,7 @@ A summary of the access policies in place can be found in the table below.
 | Web-3   |         Yes         | 20.36.42.110 (load balancer)                                             |
 | ELK-VM  |          No         | 10.1.0.7 (Jumpbox) & My public IP address on local machine via port 5601 |
 
-### Elk Configuration
+## Elk Configuration
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because it saves time and ensures consistency across installations reducing the chance of errors.
 
@@ -91,10 +91,11 @@ We have installed the following Beats on these machines:
 These Beats allow us to collect the following information from each machine:
 - Filebeat: collects data from various logs to report when and where file changes happen.  This example here is when filebeat was first installed on the webserver machines showing the systemd logs;
 ![filebeat](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Images/Filebeat_example.png)
+
 - Metricbeat: collects statistical data from the system and services running on the webserver machines such as CPU and Network usage.  In this example below we can see the Network input and output in bytes at time of installation;
 ![metricbeat](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Images/Metricbeat_example.png)
 
-### Using the Playbook
+## Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
@@ -102,10 +103,10 @@ SSH into the control node and follow the steps below:
 - Update the [hosts](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/hosts) file to include the IPs of the webservers and ELK machine.  This is so that the playbook knows which host to install the required playbook on.  i.e. you install the ELK server on the [elk] host and filebeat/metricbeat on the [webservers] host.
 - Run the playbook with `ansible-playbook *playbook_file*.yml`, and navigate to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check that the installation worked as expected. 
 
-### Step-by-Step Commands to install ELK, filebeat and metricbeat
+## Step-by-Step Commands to install ELK, filebeat and metricbeat
 *note: users, IP addresses and container names listed in commands below are for this specific project, so they will be different for a new setup*
 
-**Install ELK onto ELK-VM**
+### **Install ELK onto ELK-VM**
 - SSH into jumpbox (from local machine):
 
       `$ ssh azadmin@20.37.247.61`
@@ -143,7 +144,7 @@ SSH into the control node and follow the steps below:
 
 go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check the ELK installation worked
 
-**Install filebeat & metricbeat onto webservers**
+### **Install filebeat & metricbeat onto webservers**
 - Within your ansible container, copy filebeat and metrictbeat config files to /etc/ansible/files
 
     Filebeat:
