@@ -128,13 +128,13 @@ SSH into the control node and follow the steps below:
 
     i.e. for this project it looked like;
         
-    [webservers]                                                                              
-    10.1.0.8 ansible_python_interpreter=/usr/bin/python3                                                                                 
-    10.1.0.9 ansible_python_interpreter=/usr/bin/python3                                                                                  
-    10.1.0.10 ansible_python_interpreter=/usr/bin/python3
+      [webservers]                                                                              
+      10.1.0.8 ansible_python_interpreter=/usr/bin/python3                                                                                 
+      10.1.0.9 ansible_python_interpreter=/usr/bin/python3                                                                                  
+      10.1.0.10 ansible_python_interpreter=/usr/bin/python3
 
-    [elk]                                                                              
-    10.0.0.4 ansible_python_interpreter=/usr/bin/python3
+      [elk]                                                                              
+      10.0.0.4 ansible_python_interpreter=/usr/bin/python3
 
 
 - run install-elk.yml playbook
