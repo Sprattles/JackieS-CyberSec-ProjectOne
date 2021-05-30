@@ -101,8 +101,8 @@ In order to use the playbook, you will need to have an Ansible control node alre
 
 SSH into the control node and follow the steps below:
 - Copy the required YAML file(s) to `/etc/ansible/`
-- Update the [hosts](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/hosts) file to include the IPs of the webservers and ELK machine.  This is so that the playbook knows which host to install the required playbook on.  i.e. you install the ELK server on the [elk] host and filebeat/metricbeat on the [webservers] host.
-- Run the playbook with `ansible-playbook *playbook_file*.yml`, and navigate to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check that the installation worked as expected. 
+- Update the [hosts](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/hosts) file to include the IPs of the webservers and ELK machine.  This is so that the playbook knows which host to install the required playbook on.  i.e. you install the ELK server on the [elk] host and filebeat/metricbeat on the [webservers] host. The updated hosts file should be saved to `/etc/ansible`
+- Run the playbook with `ansible-playbook *playbook_file*.yml`, and navigate to [http://*[yourELKVM.IP]*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check that the installation worked as expected. 
 
 ## Step-by-Step Commands to install ELK, filebeat and metricbeat
 *note: users, IP addresses and container names listed in commands below are for this specific project, so they will be different for a new setup*
@@ -143,18 +143,18 @@ SSH into the control node and follow the steps below:
 
       $ ansible-playbook /etc/ansible/install-elk.yml
 
-- go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check the ELK installation worked
+- go to [http://*[yourELKVM.IP]*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check the ELK installation worked
 
 ### **Install filebeat & metricbeat onto webservers**
-- Within your ansible container, copy filebeat and metrictbeat config files to /etc/ansible/files
+- Within your ansible container, download/save the filebeat and metrictbeat config files to /etc/ansible/files
 
     Filebeat:
     
-      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-config.yml /etc/ansible/files
+      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-config.yml > /etc/ansible/files/filebeat-config.yml
     
     Metricbeat: 
   
-      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-config.yml
+      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-config.yml > /etc/ansible/files/metricbeat-config.yml
 
 - Edit the filebeat and metricbeat config files to replace the IP address with that of your ELK machine.  
 *Note: filebeat is a large file so the IP addresses need replacing at lines #1106 & #1806*
@@ -173,16 +173,16 @@ SSH into the control node and follow the steps below:
 
   Filebeat: 
 
-      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-playbook.yml /etc/ansible/roles
+      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-playbook.yml > /etc/ansible/roles/filebeat-playbook.yml
 
   Metricbeat: 
 
-      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml /etc/ansible/roles
+      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml > /etc/ansible/roles/metricbeat-playbook.yml
     
-- Run the filebeat playbook
+- First, run the filebeat playbook
 
       $ ansible-playbook filebeat-playbook.yml
-- Go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) and do the following steps to verify the filebeat installation was successful;
+- Go to [http://*[yourELKVM.IP]*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) and do the following steps to verify the filebeat installation was successful;
 
   - click on `Add log data`
   - then `System logs`
@@ -190,10 +190,10 @@ SSH into the control node and follow the steps below:
   - scroll down to the bottom and click on the `Check data` button
   - then you can analyse data by clicking on the blue `System logs dashboard` button
 
-- Run the metricbeat playbook
+- Lastly, run the metricbeat playbook
 
         $ ansible-playbook metricbeat-playbook.yml
-- Go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) and do the following steps to verify the filebeat installation was successful;
+- Go to [http://*[yourELKVM.IP]*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) and do the following steps to verify the metricbeat installation was successful;
 
   - click on `Add metric data`
   - then `Docker metrics`
