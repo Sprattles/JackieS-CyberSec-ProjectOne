@@ -110,23 +110,23 @@ SSH into the control node and follow the steps below:
 ### **Install ELK onto ELK-VM**
 - SSH into jumpbox (from local machine):
 
-      `$ ssh azadmin@20.37.247.61`
+      $ ssh azadmin@20.37.247.61
 
 - list docker containers:
 
-      `$ sudo docker container list -a`
+      $ sudo docker container list -a
 
 - start docker container
 
-      `$ sudo docker container start compassionate_leakey`
+      $ sudo docker container start compassionate_leakey
 
 - attack docker container
 
-      `$ sudo docker container attach compassionate_leakey`
+      $ sudo docker container attach compassionate_leakey
 
 - Add webservers and ELK machines to hosts file
 
-      `$ nano /etc/ansible/hosts`
+      $ nano /etc/ansible/hosts
 
     i.e. for this project it looked like;
         
@@ -141,7 +141,7 @@ SSH into the control node and follow the steps below:
 
 - run install-elk.yml playbook
 
-      `$ ansible-playbook /etc/ansible/install-elk.yml`
+      $ ansible-playbook /etc/ansible/install-elk.yml
 
 go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check the ELK installation worked
 
@@ -150,18 +150,18 @@ go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kib
 
     Filebeat:
     
-      `$ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-config.yml /etc/ansible/files`
+      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-config.yml /etc/ansible/files
     
     Metricbeat: 
   
-      `$ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-config.yml`
+      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-config.yml
 
 - Edit the filebeat and metricbeat config files to replace the IP address with that of your ELK machine.  
 *Note: filebeat is a large file so the IP addresses need replacing at lines #1106 & #1806*
 
-      `$ nano filebeat-config.yml`
+      $ nano filebeat-config.yml
 
-      `$ nano metricbeat-config.yml`
+      $ nano metricbeat-config.yml
     
     tip: to quickly get to specific lines press `ctrl`+`shift`+`_` and enter the line number you want to navigate to.
 
@@ -173,15 +173,15 @@ go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kib
 
   Filebeat: 
 
-      `$ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-playbook.yml /etc/ansible/roles`
+      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-playbook.yml /etc/ansible/roles
 
   Metricbeat: 
 
-      `$ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml`
+      $ wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml
     
 - Run the filebeat playbook
 
-      `$ ansible-playbook filebeat-playbook.yml`
+      $ ansible-playbook filebeat-playbook.yml
 - Go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) and do the following steps to verify the filebeat installation was successful;
 
   - click on `Add log data`
@@ -192,7 +192,7 @@ go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kib
 
   - Run the metricbeat playbook
 
-        `$ ansible-playbook metricbeat-playbook.yml`
+        $ ansible-playbook metricbeat-playbook.yml
 - Go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) and do the following steps to verify the filebeat installation was successful;
 
   - click on `Add metric data`
