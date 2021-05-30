@@ -143,7 +143,7 @@ SSH into the control node and follow the steps below:
 
       $ ansible-playbook /etc/ansible/install-elk.yml
 
-go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check the ELK installation worked
+- go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check the ELK installation worked
 
 ### **Install filebeat & metricbeat onto webservers**
 - Within your ansible container, copy filebeat and metrictbeat config files to /etc/ansible/files
@@ -190,7 +190,7 @@ go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kib
   - scroll down to the bottom and click on the `Check data` button
   - then you can analyse data by clicking on the blue `System logs dashboard` button
 
-  - Run the metricbeat playbook
+- Run the metricbeat playbook
 
         $ ansible-playbook metricbeat-playbook.yml
 - Go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) and do the following steps to verify the filebeat installation was successful;
