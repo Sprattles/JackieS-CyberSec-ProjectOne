@@ -22,7 +22,7 @@ This document contains the following details:
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
 Load balancing ensures that the application will be highly available, in addition to restricting access to the network.
-Load balancers distribute traffic evenly across servers and play a crucial role in mitigating DDoS attacks.  They are typically set up with a health probe function that checks the machines behind it are 'healthy' before sending traffic to them.
+Load balancers distribute traffic evenly across servers and play a crucial role in mitigating DDoS attacks.  They are typically set up with a health probe function that checks that the machines behind it are 'healthy' before sending traffic to them.
 
 A jump box provisioner is used to control and maintain the webserver virtual machines on the network from one location.  An advantage of this jump box is that it is only accessible by an administrator from a specified IP address outlined in the Network Security Rules.
 
@@ -100,12 +100,12 @@ In order to use the playbook, you will need to have an Ansible control node alre
 SSH into the control node and follow the steps below:
 - Copy the required YAML file(s) to `/etc/ansible/`
 - Update the [hosts](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/hosts) file to include the IPs of the webservers and ELK machine.  This is so that the playbook knows which host to install the required playbook on.  i.e. you install the ELK server on the [elk] host and filebeat/metricbeat on the [webservers] host.
-- Run the playbook with `ansible-playbook *playbook_file*.yml`, and navigate to [](http://*yourELKVM.IP*:5601/app/kibana) to check that the installation worked as expected. 
+- Run the playbook with `ansible-playbook *playbook_file*.yml`, and navigate to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check that the installation worked as expected. 
 
-### Commands to install ELK, filebeat and metricbeat
-note: users and IP addresses listed below are for this specific project, so will be different for a new virtual network setup.
+### Step-by-Step Commands to install ELK, filebeat and metricbeat
+*note: users, IP addresses and container names listed in commands below are for this specific project, so they will be different for a new setup*
 
-#### Install ELK onto ELK-VM
+**Install ELK onto ELK-VM**
 - SSH into jumpbox (from local machine):
 
     `ssh azadmin@20.37.247.61`
@@ -143,15 +143,19 @@ note: users and IP addresses listed below are for this specific project, so will
 
 go to [http://*yourELKVM.IP*:5601/app/kibana](http://*yourELKVM.IP*:5601/app/kibana) to check the ELK installation worked
 
-#### Install filebeat & metricbeat onto webservers
+**Install filebeat & metricbeat onto webservers**
 - Within your ansible container, copy filebeat and metrictbeat config files to /etc/ansible/files
 
-    Filebeat:    `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-config.yml /etc/ansible/files`
+    Filebeat:
     
-    Metricbeat: `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-config.yml`
+    `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-config.yml /etc/ansible/files`
+    
+    Metricbeat: 
+  
+  `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-config.yml`
 
-- Edit the filebeat and metricbeat files to replace the IP address with that of your ELK machine.  
-Note: filebeat is a large file so the IP addresses need replacing at lines #1106 & #1806
+- Edit the filebeat and metricbeat config files to replace the IP address with that of your ELK machine.  
+*Note: filebeat is a large file so the IP addresses need replacing at lines #1106 & #1806*
 
     `nano filebeat-config.yml`
 
@@ -165,9 +169,13 @@ Note: filebeat is a large file so the IP addresses need replacing at lines #1106
 
 - Download and save the filebeat and metricbeat playbook files to /etc/ansible/roles
 
-Filebeat: `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-playbook.yml /etc/ansible/roles`
+  Filebeat: 
 
-Metricbeat: `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml`
+  `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/filebeat-playbook.yml /etc/ansible/roles`
+
+  Metricbeat: 
+
+  `wget https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml`
     
 - Run the filebeat playbook
 
