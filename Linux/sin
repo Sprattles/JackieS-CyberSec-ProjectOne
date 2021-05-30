@@ -1,0 +1,107 @@
+#!/bin/bash
+
+# Checkf if script was run as root, exit if true
+if [ $(whoami) = "root"
+then
+  echo "Please do not run this script as root."
+  exit
+fi
+
+# Define Variables
+output=$HOME/research/sys_info.txt
+ip=$(ip addr | grep inet |tail -2 | head -1)
+execs=$(find /home type -f -perm 777)
+cpu=$(lscpu | grep CPU)
+disk=$(df -H | head -2)
+
+# Define lists to use later
+commands=(
+ 'date'
+ 'uname -a'
+ 'hostname -s'
+)
+
+files=(
+ '/etc/passwd'
+ '/etc/shadow'
+)
+
+# Chech for research directory. Create if needed.
+if [ ! -d $HOME/research ];
+then 
+ mkdir $HOME/research 2
+fi
+
+# Check for output file.  Clear if needed.
+if [ -f $output ];
+then
+ rm $output
+fi
+
+####START SCRIPT####
+echo "A Title for this script" >> $output
+#date >> $output
+echo "" >> $output
+
+for x in {0..2};
+do
+  results=$(${commands[$x]})
+  echo "Results of \"${commands[x]}\" command:"
+  echo $results
+  echo ""
+done
+
+# Display the Machine type:
+echo "Machine Type Info:" >> $output
+echo -e "$MACHTYPE \n" >> $output
+
+#echo -e "Uname info: $(uname -a) \n" >> $output
+#echo -e "IP info: $(ip addr | head -9 | tail -1) \n" >> $output
+
+# Display IP Address info:
+echo -e "IP info:" >> $output
+echo -e "ip \n" >> $output
+
+#echo -e "Hostname: $(hostname -s) \n" >> $output
+
+# Display Memory usage:
+echo -e "\nMemory Info:" >> $output
+free >> $output
+
+# Display CPU usage:
+echo -e "\nCPU Info:" >> $output
+lscpu | grep CPU >> $output
+
+# Display Disk usage:
+echo -e "\nDisk Usage:" >> $output
+df -H | head -2 >> $output
+
+# Display who is logged in:
+echo -e "\nWho is logged in: \n $(who -a) \n" >> $output
+
+# Display DNS Info:
+echo "DNS Servers: " >> $output
+cat /etc/resolv.conf >> $output
+
+# List exec files:
+echo -e "\nexec Files:" >> $output
+for exec in execs; do
+  echo $exec >> $output
+done
+
+#echo -e "\n777 Files:" >> $output
+#echo -e "\n$PERM:" >> $output
+#find /home -type f -perm 777 >> $output
+
+# List the top 10 processes:
+echo -e "\nTop 10 Processes" >> $output
+ps aux --sort -%mem | awk {'print $1, $2, $3, $4, $11'} | head >> $output 
+
+# Check for permissions on Shadow and Passwd files
+echo -e "\nThe permissions for sensitive /etc files:"
+for files in ${files[@]}
+do
+ls -l $files
+done
+
+
