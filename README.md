@@ -76,7 +76,7 @@ The following screenshot displays the result of running `docker ps` after succes
 
 ![docker ps](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Images/docker_ps_ELK.png )
 
-### Target Machines & Beats
+## Target Machines & Beats
 This ELK server is configured to monitor the following machines:
 | Machine name | Private IP address |
 |--------------|--------------------|
@@ -89,10 +89,11 @@ We have installed the following Beats on these machines:
 - [Metricbeat](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Ansible/metricbeat-playbook.yml)
 
 These Beats allow us to collect the following information from each machine:
-- Filebeat: collects data from various logs to report when and where file changes happen.  This example here is when filebeat was first installed on the webserver machines showing the systemd logs;
+- **Filebeat:** collects data from various logs to report when and where file changes happen.  This example here is when filebeat was first installed on the webserver machines showing the systemd logs;
 ![filebeat](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Images/Filebeat_example.png)
 
-- Metricbeat: collects statistical data from the system and services running on the webserver machines such as CPU and Network usage.  In this example below we can see the Network input and output in bytes at time of installation;
+
+- **Metricbeat**: collects statistical data from the system and services running on the webserver machines such as CPU and Network usage.  In this example below we can see the Network input and output in bytes at time of installation;
 ![metricbeat](https://github.com/Sprattles/JackieS-CyberSec-Project1/blob/main/Images/Metricbeat_example.png)
 
 ## Using the Playbook
