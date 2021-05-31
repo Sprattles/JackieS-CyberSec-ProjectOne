@@ -19,6 +19,5 @@
 # List the IP address of your ELK server
 # There should only be one IP address
 [elk]
-
 10.0.0.4 ansible_python_interpreter=/usr/bin/python3
 
